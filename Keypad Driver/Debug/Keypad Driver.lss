@@ -1,0 +1,974 @@
+
+Keypad Driver.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000b4  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  000004fe  00000592  2**0
+                  ALLOC, LOAD, DATA
+  2 .comment      0000002f  00000000  00000000  00000592  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000078  00000000  00000000  000005c1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00001426  00000000  00000000  00000639  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 0000078f  00000000  00000000  00001a5f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   00000521  00000000  00000000  000021ee  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000118  00000000  00000000  00002710  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    00000240  00000000  00000000  00002828  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000786  00000000  00000000  00002a68  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000048  00000000  00000000  000031ee  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .text         00000004  000004ee  000004ee  00000582  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 12 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00003238  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .text.GPIO_Init 000000ba  00000204  00000204  00000298  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 14 .text.GPIO_Writepin 00000096  00000358  00000358  000003ec  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text.GPIO_Readpin 00000080  000003ee  000003ee  00000482  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .text.Keypad_4_3_Init 0000009a  000002be  000002be  00000352  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 17 .rodata       0000000c  00800060  000004f2  00000586  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+ 18 .text.Keypad_4_3_read 00000150  000000b4  000000b4  00000148  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 19 .bss.key2     00000001  0080006c  0080006c  00000592  2**0
+                  ALLOC
+ 20 .bss.key1     00000001  0080006d  0080006d  00000592  2**0
+                  ALLOC
+ 21 .text.main    00000080  0000046e  0000046e  00000502  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 30 00 	jmp	0x60	; 0x60 <__ctors_end>
+   4:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+   8:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+   c:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  10:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  14:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  18:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  1c:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  20:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  24:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  28:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  2c:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  30:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  34:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  38:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  3c:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  40:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  44:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  48:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  4c:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+  50:	0c 94 77 02 	jmp	0x4ee	; 0x4ee <__bad_interrupt>
+
+00000054 <.dinit>:
+  54:	00 60       	ori	r16, 0x00	; 0
+  56:	00 6c       	ori	r16, 0xC0	; 192
+  58:	00 04       	cpc	r0, r0
+  5a:	f2 00       	.word	0x00f2	; ????
+  5c:	6c 00       	.word	0x006c	; ????
+  5e:	6e 80       	ldd	r6, Y+6	; 0x06
+
+00000060 <__ctors_end>:
+  60:	11 24       	eor	r1, r1
+  62:	1f be       	out	0x3f, r1	; 63
+  64:	cf e5       	ldi	r28, 0x5F	; 95
+  66:	d8 e0       	ldi	r29, 0x08	; 8
+  68:	de bf       	out	0x3e, r29	; 62
+  6a:	cd bf       	out	0x3d, r28	; 61
+
+0000006c <__do_copy_data>:
+  6c:	e4 e5       	ldi	r30, 0x54	; 84
+  6e:	f0 e0       	ldi	r31, 0x00	; 0
+  70:	40 e0       	ldi	r20, 0x00	; 0
+  72:	17 c0       	rjmp	.+46     	; 0xa2 <__do_clear_bss+0x8>
+  74:	b5 91       	lpm	r27, Z+
+  76:	a5 91       	lpm	r26, Z+
+  78:	35 91       	lpm	r19, Z+
+  7a:	25 91       	lpm	r18, Z+
+  7c:	05 91       	lpm	r16, Z+
+  7e:	07 fd       	sbrc	r16, 7
+  80:	0c c0       	rjmp	.+24     	; 0x9a <__do_clear_bss>
+  82:	95 91       	lpm	r25, Z+
+  84:	85 91       	lpm	r24, Z+
+  86:	ef 01       	movw	r28, r30
+  88:	f9 2f       	mov	r31, r25
+  8a:	e8 2f       	mov	r30, r24
+  8c:	05 90       	lpm	r0, Z+
+  8e:	0d 92       	st	X+, r0
+  90:	a2 17       	cp	r26, r18
+  92:	b3 07       	cpc	r27, r19
+  94:	d9 f7       	brne	.-10     	; 0x8c <__do_copy_data+0x20>
+  96:	fe 01       	movw	r30, r28
+  98:	04 c0       	rjmp	.+8      	; 0xa2 <__do_clear_bss+0x8>
+
+0000009a <__do_clear_bss>:
+  9a:	1d 92       	st	X+, r1
+  9c:	a2 17       	cp	r26, r18
+  9e:	b3 07       	cpc	r27, r19
+  a0:	e1 f7       	brne	.-8      	; 0x9a <__do_clear_bss>
+  a2:	e0 36       	cpi	r30, 0x60	; 96
+  a4:	f4 07       	cpc	r31, r20
+  a6:	31 f7       	brne	.-52     	; 0x74 <__do_copy_data+0x8>
+  a8:	0e 94 37 02 	call	0x46e	; 0x46e <main>
+  ac:	0c 94 58 00 	jmp	0xb0	; 0xb0 <_exit>
+
+000000b0 <_exit>:
+  b0:	f8 94       	cli
+
+000000b2 <__stop_program>:
+  b2:	ff cf       	rjmp	.-2      	; 0xb2 <__stop_program>
+
+Disassembly of section .text:
+
+000004ee <__bad_interrupt>:
+ 4ee:	0c 94 00 00 	jmp	0	; 0x0 <__TEXT_REGION_ORIGIN__>
+
+Disassembly of section .text.GPIO_Init:
+
+00000204 <GPIO_Init>:
+#include <avr/io.h>
+#include "GPIO.h"
+
+void GPIO_Init(GPIOConfigType* cfgparam, unsigned char port_x, unsigned char mask)
+{
+	if(cfgparam->UsePullUp == 1)
+ 204:	fc 01       	movw	r30, r24
+ 206:	21 81       	ldd	r18, Z+1	; 0x01
+ 208:	21 30       	cpi	r18, 0x01	; 1
+ 20a:	21 f4       	brne	.+8      	; 0x214 <GPIO_Init+0x10>
+	{
+		SFIOR |= (1<<PUD);
+ 20c:	20 b7       	in	r18, 0x30	; 48
+ 20e:	24 60       	ori	r18, 0x04	; 4
+ 210:	20 bf       	out	0x30, r18	; 48
+ 212:	02 c0       	rjmp	.+4      	; 0x218 <GPIO_Init+0x14>
+	}
+	else
+	{
+		SFIOR &= (0<<PUD);
+ 214:	20 b7       	in	r18, 0x30	; 48
+ 216:	10 be       	out	0x30, r1	; 48
+	}
+	
+	switch(port_x)
+ 218:	62 34       	cpi	r22, 0x42	; 66
+ 21a:	d9 f0       	breq	.+54     	; 0x252 <GPIO_Init+0x4e>
+ 21c:	18 f4       	brcc	.+6      	; 0x224 <GPIO_Init+0x20>
+ 21e:	61 34       	cpi	r22, 0x41	; 65
+ 220:	31 f0       	breq	.+12     	; 0x22e <GPIO_Init+0x2a>
+ 222:	08 95       	ret
+ 224:	63 34       	cpi	r22, 0x43	; 67
+ 226:	39 f1       	breq	.+78     	; 0x276 <GPIO_Init+0x72>
+ 228:	64 34       	cpi	r22, 0x44	; 68
+ 22a:	b9 f1       	breq	.+110    	; 0x29a <GPIO_Init+0x96>
+ 22c:	08 95       	ret
+	{
+		case 'A':
+		if(cfgparam->PortDirection == 1)
+ 22e:	fc 01       	movw	r30, r24
+ 230:	80 81       	ld	r24, Z
+ 232:	81 30       	cpi	r24, 0x01	; 1
+ 234:	59 f4       	brne	.+22     	; 0x24c <GPIO_Init+0x48>
+		{
+			DDRA |= (1<<mask);
+ 236:	2a b3       	in	r18, 0x1a	; 26
+ 238:	81 e0       	ldi	r24, 0x01	; 1
+ 23a:	90 e0       	ldi	r25, 0x00	; 0
+ 23c:	02 c0       	rjmp	.+4      	; 0x242 <GPIO_Init+0x3e>
+ 23e:	88 0f       	add	r24, r24
+ 240:	99 1f       	adc	r25, r25
+ 242:	4a 95       	dec	r20
+ 244:	e2 f7       	brpl	.-8      	; 0x23e <GPIO_Init+0x3a>
+ 246:	82 2b       	or	r24, r18
+ 248:	8a bb       	out	0x1a, r24	; 26
+ 24a:	08 95       	ret
+		}
+		else
+		{
+			DDRA &= (0<<mask);
+ 24c:	8a b3       	in	r24, 0x1a	; 26
+ 24e:	1a ba       	out	0x1a, r1	; 26
+ 250:	08 95       	ret
+		}
+		
+		break;
+		
+		case 'B':
+		if(cfgparam->PortDirection == 1)
+ 252:	fc 01       	movw	r30, r24
+ 254:	80 81       	ld	r24, Z
+ 256:	81 30       	cpi	r24, 0x01	; 1
+ 258:	59 f4       	brne	.+22     	; 0x270 <GPIO_Init+0x6c>
+		{
+			DDRB |= (1<<mask);
+ 25a:	27 b3       	in	r18, 0x17	; 23
+ 25c:	81 e0       	ldi	r24, 0x01	; 1
+ 25e:	90 e0       	ldi	r25, 0x00	; 0
+ 260:	02 c0       	rjmp	.+4      	; 0x266 <GPIO_Init+0x62>
+ 262:	88 0f       	add	r24, r24
+ 264:	99 1f       	adc	r25, r25
+ 266:	4a 95       	dec	r20
+ 268:	e2 f7       	brpl	.-8      	; 0x262 <GPIO_Init+0x5e>
+ 26a:	82 2b       	or	r24, r18
+ 26c:	87 bb       	out	0x17, r24	; 23
+ 26e:	08 95       	ret
+		}
+		else
+		{
+			DDRB &= (0<<mask);
+ 270:	87 b3       	in	r24, 0x17	; 23
+ 272:	17 ba       	out	0x17, r1	; 23
+ 274:	08 95       	ret
+		}
+		break;
+		
+		case 'C':
+		if(cfgparam->PortDirection == 1)
+ 276:	fc 01       	movw	r30, r24
+ 278:	80 81       	ld	r24, Z
+ 27a:	81 30       	cpi	r24, 0x01	; 1
+ 27c:	59 f4       	brne	.+22     	; 0x294 <GPIO_Init+0x90>
+		{
+			DDRC |= (1<<mask);
+ 27e:	24 b3       	in	r18, 0x14	; 20
+ 280:	81 e0       	ldi	r24, 0x01	; 1
+ 282:	90 e0       	ldi	r25, 0x00	; 0
+ 284:	02 c0       	rjmp	.+4      	; 0x28a <GPIO_Init+0x86>
+ 286:	88 0f       	add	r24, r24
+ 288:	99 1f       	adc	r25, r25
+ 28a:	4a 95       	dec	r20
+ 28c:	e2 f7       	brpl	.-8      	; 0x286 <GPIO_Init+0x82>
+ 28e:	82 2b       	or	r24, r18
+ 290:	84 bb       	out	0x14, r24	; 20
+ 292:	08 95       	ret
+		}
+		else
+		{
+			DDRC &= (0<<mask);
+ 294:	84 b3       	in	r24, 0x14	; 20
+ 296:	14 ba       	out	0x14, r1	; 20
+ 298:	08 95       	ret
+		}
+		break;
+		
+		case 'D':
+		if(cfgparam->PortDirection == 1)
+ 29a:	fc 01       	movw	r30, r24
+ 29c:	80 81       	ld	r24, Z
+ 29e:	81 30       	cpi	r24, 0x01	; 1
+ 2a0:	59 f4       	brne	.+22     	; 0x2b8 <GPIO_Init+0xb4>
+		{
+			DDRD |= (1<<mask);
+ 2a2:	21 b3       	in	r18, 0x11	; 17
+ 2a4:	81 e0       	ldi	r24, 0x01	; 1
+ 2a6:	90 e0       	ldi	r25, 0x00	; 0
+ 2a8:	02 c0       	rjmp	.+4      	; 0x2ae <GPIO_Init+0xaa>
+ 2aa:	88 0f       	add	r24, r24
+ 2ac:	99 1f       	adc	r25, r25
+ 2ae:	4a 95       	dec	r20
+ 2b0:	e2 f7       	brpl	.-8      	; 0x2aa <GPIO_Init+0xa6>
+ 2b2:	82 2b       	or	r24, r18
+ 2b4:	81 bb       	out	0x11, r24	; 17
+ 2b6:	08 95       	ret
+		}
+		else
+		{
+			DDRD &= (0<<mask);
+ 2b8:	81 b3       	in	r24, 0x11	; 17
+ 2ba:	11 ba       	out	0x11, r1	; 17
+ 2bc:	08 95       	ret
+
+Disassembly of section .text.GPIO_Writepin:
+
+00000358 <GPIO_Writepin>:
+		break;
+	}
+}
+void GPIO_Writepin(unsigned char port_x, unsigned char pin_no, unsigned char data)
+{
+	switch(port_x)
+ 358:	82 34       	cpi	r24, 0x42	; 66
+ 35a:	c9 f0       	breq	.+50     	; 0x38e <GPIO_Writepin+0x36>
+ 35c:	18 f4       	brcc	.+6      	; 0x364 <GPIO_Writepin+0xc>
+ 35e:	81 34       	cpi	r24, 0x41	; 65
+ 360:	31 f0       	breq	.+12     	; 0x36e <GPIO_Writepin+0x16>
+ 362:	08 95       	ret
+ 364:	83 34       	cpi	r24, 0x43	; 67
+ 366:	19 f1       	breq	.+70     	; 0x3ae <GPIO_Writepin+0x56>
+ 368:	84 34       	cpi	r24, 0x44	; 68
+ 36a:	89 f1       	breq	.+98     	; 0x3ce <GPIO_Writepin+0x76>
+ 36c:	08 95       	ret
+	{
+		case 'A':
+		if(data == 1)
+ 36e:	41 30       	cpi	r20, 0x01	; 1
+ 370:	59 f4       	brne	.+22     	; 0x388 <GPIO_Writepin+0x30>
+		{
+			PORTA |= (1 << pin_no);
+ 372:	2b b3       	in	r18, 0x1b	; 27
+ 374:	81 e0       	ldi	r24, 0x01	; 1
+ 376:	90 e0       	ldi	r25, 0x00	; 0
+ 378:	02 c0       	rjmp	.+4      	; 0x37e <GPIO_Writepin+0x26>
+ 37a:	88 0f       	add	r24, r24
+ 37c:	99 1f       	adc	r25, r25
+ 37e:	6a 95       	dec	r22
+ 380:	e2 f7       	brpl	.-8      	; 0x37a <GPIO_Writepin+0x22>
+ 382:	82 2b       	or	r24, r18
+ 384:	8b bb       	out	0x1b, r24	; 27
+ 386:	08 95       	ret
+		}
+		else
+		{
+			PORTA &= (0 << pin_no);
+ 388:	8b b3       	in	r24, 0x1b	; 27
+ 38a:	1b ba       	out	0x1b, r1	; 27
+ 38c:	08 95       	ret
+		}
+		break;
+		
+		case 'B':
+		if(data == 1)
+ 38e:	41 30       	cpi	r20, 0x01	; 1
+ 390:	59 f4       	brne	.+22     	; 0x3a8 <GPIO_Writepin+0x50>
+		{
+			PORTB |= (1 << pin_no);
+ 392:	28 b3       	in	r18, 0x18	; 24
+ 394:	81 e0       	ldi	r24, 0x01	; 1
+ 396:	90 e0       	ldi	r25, 0x00	; 0
+ 398:	02 c0       	rjmp	.+4      	; 0x39e <GPIO_Writepin+0x46>
+ 39a:	88 0f       	add	r24, r24
+ 39c:	99 1f       	adc	r25, r25
+ 39e:	6a 95       	dec	r22
+ 3a0:	e2 f7       	brpl	.-8      	; 0x39a <GPIO_Writepin+0x42>
+ 3a2:	82 2b       	or	r24, r18
+ 3a4:	88 bb       	out	0x18, r24	; 24
+ 3a6:	08 95       	ret
+		}
+		else
+		{
+			PORTB &= (0 << pin_no);
+ 3a8:	88 b3       	in	r24, 0x18	; 24
+ 3aa:	18 ba       	out	0x18, r1	; 24
+ 3ac:	08 95       	ret
+		}
+		break;
+		
+		case 'C':
+		if(data == 1)
+ 3ae:	41 30       	cpi	r20, 0x01	; 1
+ 3b0:	59 f4       	brne	.+22     	; 0x3c8 <GPIO_Writepin+0x70>
+		{
+			PORTC |= (1 << pin_no);
+ 3b2:	25 b3       	in	r18, 0x15	; 21
+ 3b4:	81 e0       	ldi	r24, 0x01	; 1
+ 3b6:	90 e0       	ldi	r25, 0x00	; 0
+ 3b8:	02 c0       	rjmp	.+4      	; 0x3be <GPIO_Writepin+0x66>
+ 3ba:	88 0f       	add	r24, r24
+ 3bc:	99 1f       	adc	r25, r25
+ 3be:	6a 95       	dec	r22
+ 3c0:	e2 f7       	brpl	.-8      	; 0x3ba <GPIO_Writepin+0x62>
+ 3c2:	82 2b       	or	r24, r18
+ 3c4:	85 bb       	out	0x15, r24	; 21
+ 3c6:	08 95       	ret
+		}
+		else
+		{
+			PORTC &= (0 << pin_no);
+ 3c8:	85 b3       	in	r24, 0x15	; 21
+ 3ca:	15 ba       	out	0x15, r1	; 21
+ 3cc:	08 95       	ret
+		}
+		break;
+		
+		case 'D':
+		if(data == 1)
+ 3ce:	41 30       	cpi	r20, 0x01	; 1
+ 3d0:	59 f4       	brne	.+22     	; 0x3e8 <GPIO_Writepin+0x90>
+		{
+			PORTD |= (1 << pin_no);
+ 3d2:	22 b3       	in	r18, 0x12	; 18
+ 3d4:	81 e0       	ldi	r24, 0x01	; 1
+ 3d6:	90 e0       	ldi	r25, 0x00	; 0
+ 3d8:	02 c0       	rjmp	.+4      	; 0x3de <GPIO_Writepin+0x86>
+ 3da:	88 0f       	add	r24, r24
+ 3dc:	99 1f       	adc	r25, r25
+ 3de:	6a 95       	dec	r22
+ 3e0:	e2 f7       	brpl	.-8      	; 0x3da <GPIO_Writepin+0x82>
+ 3e2:	82 2b       	or	r24, r18
+ 3e4:	82 bb       	out	0x12, r24	; 18
+ 3e6:	08 95       	ret
+		}
+		else
+		{
+			PORTD &= (0 << pin_no);
+ 3e8:	82 b3       	in	r24, 0x12	; 18
+ 3ea:	12 ba       	out	0x12, r1	; 18
+ 3ec:	08 95       	ret
+
+Disassembly of section .text.GPIO_Readpin:
+
+000003ee <GPIO_Readpin>:
+	}
+	
+}
+unsigned char GPIO_Readpin(unsigned char port_x, unsigned char pin_no)
+{
+	switch(port_x)
+ 3ee:	82 34       	cpi	r24, 0x42	; 66
+ 3f0:	a1 f0       	breq	.+40     	; 0x41a <__EEPROM_REGION_LENGTH__+0x1a>
+ 3f2:	18 f4       	brcc	.+6      	; 0x3fa <GPIO_Readpin+0xc>
+ 3f4:	81 34       	cpi	r24, 0x41	; 65
+ 3f6:	31 f0       	breq	.+12     	; 0x404 <__EEPROM_REGION_LENGTH__+0x4>
+ 3f8:	31 c0       	rjmp	.+98     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 3fa:	83 34       	cpi	r24, 0x43	; 67
+ 3fc:	c9 f0       	breq	.+50     	; 0x430 <__EEPROM_REGION_LENGTH__+0x30>
+ 3fe:	84 34       	cpi	r24, 0x44	; 68
+ 400:	11 f1       	breq	.+68     	; 0x446 <__EEPROM_REGION_LENGTH__+0x46>
+ 402:	2c c0       	rjmp	.+88     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+	{
+		case 'A':
+		if(PINA & (1<<pin_no))
+ 404:	89 b3       	in	r24, 0x19	; 25
+ 406:	90 e0       	ldi	r25, 0x00	; 0
+ 408:	02 c0       	rjmp	.+4      	; 0x40e <__EEPROM_REGION_LENGTH__+0xe>
+ 40a:	95 95       	asr	r25
+ 40c:	87 95       	ror	r24
+ 40e:	6a 95       	dec	r22
+ 410:	e2 f7       	brpl	.-8      	; 0x40a <__EEPROM_REGION_LENGTH__+0xa>
+ 412:	80 fd       	sbrc	r24, 0
+ 414:	24 c0       	rjmp	.+72     	; 0x45e <__EEPROM_REGION_LENGTH__+0x5e>
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+ 416:	80 e0       	ldi	r24, 0x00	; 0
+ 418:	08 95       	ret
+		}
+		break;
+		
+		case 'B':
+		if(PINB & (1<<pin_no))
+ 41a:	86 b3       	in	r24, 0x16	; 22
+ 41c:	90 e0       	ldi	r25, 0x00	; 0
+ 41e:	02 c0       	rjmp	.+4      	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
+ 420:	95 95       	asr	r25
+ 422:	87 95       	ror	r24
+ 424:	6a 95       	dec	r22
+ 426:	e2 f7       	brpl	.-8      	; 0x420 <__EEPROM_REGION_LENGTH__+0x20>
+ 428:	80 ff       	sbrs	r24, 0
+ 42a:	1b c0       	rjmp	.+54     	; 0x462 <__EEPROM_REGION_LENGTH__+0x62>
+		{
+			return 1;
+ 42c:	81 e0       	ldi	r24, 0x01	; 1
+ 42e:	08 95       	ret
+			return 0;
+		}
+		break;
+		
+		case 'C':
+		if(PINC & (1<<pin_no))
+ 430:	83 b3       	in	r24, 0x13	; 19
+ 432:	90 e0       	ldi	r25, 0x00	; 0
+ 434:	02 c0       	rjmp	.+4      	; 0x43a <__EEPROM_REGION_LENGTH__+0x3a>
+ 436:	95 95       	asr	r25
+ 438:	87 95       	ror	r24
+ 43a:	6a 95       	dec	r22
+ 43c:	e2 f7       	brpl	.-8      	; 0x436 <__EEPROM_REGION_LENGTH__+0x36>
+ 43e:	80 ff       	sbrs	r24, 0
+ 440:	12 c0       	rjmp	.+36     	; 0x466 <__EEPROM_REGION_LENGTH__+0x66>
+		{
+			return 1;
+ 442:	81 e0       	ldi	r24, 0x01	; 1
+ 444:	08 95       	ret
+			return 0;
+		}
+		break;
+		
+		case 'D':
+		if(PIND & (1<<pin_no))
+ 446:	80 b3       	in	r24, 0x10	; 16
+ 448:	90 e0       	ldi	r25, 0x00	; 0
+ 44a:	02 c0       	rjmp	.+4      	; 0x450 <__EEPROM_REGION_LENGTH__+0x50>
+ 44c:	95 95       	asr	r25
+ 44e:	87 95       	ror	r24
+ 450:	6a 95       	dec	r22
+ 452:	e2 f7       	brpl	.-8      	; 0x44c <__EEPROM_REGION_LENGTH__+0x4c>
+ 454:	80 ff       	sbrs	r24, 0
+ 456:	09 c0       	rjmp	.+18     	; 0x46a <__EEPROM_REGION_LENGTH__+0x6a>
+		{
+			return 1;
+ 458:	81 e0       	ldi	r24, 0x01	; 1
+ 45a:	08 95       	ret
+		{
+			return 0;
+		}
+		break;
+	}
+ 45c:	08 95       	ret
+	switch(port_x)
+	{
+		case 'A':
+		if(PINA & (1<<pin_no))
+		{
+			return 1;
+ 45e:	81 e0       	ldi	r24, 0x01	; 1
+ 460:	08 95       	ret
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+ 462:	80 e0       	ldi	r24, 0x00	; 0
+ 464:	08 95       	ret
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+ 466:	80 e0       	ldi	r24, 0x00	; 0
+ 468:	08 95       	ret
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+ 46a:	80 e0       	ldi	r24, 0x00	; 0
+		}
+		break;
+	}
+ 46c:	08 95       	ret
+
+Disassembly of section .text.Keypad_4_3_Init:
+
+000002be <Keypad_4_3_Init>:
+
+static unsigned char key1 = 0;
+static unsigned char key2 = 0;
+void Keypad_4_3_Init(unsigned char port_x, unsigned char row_1_pin, unsigned char row_2_pin, unsigned char row_3_pin, unsigned char row_4_pin,
+					 unsigned char col_1_pin, unsigned char col_2_pin, unsigned char col_3_pin)
+{
+ 2be:	af 92       	push	r10
+ 2c0:	cf 92       	push	r12
+ 2c2:	df 92       	push	r13
+ 2c4:	ef 92       	push	r14
+ 2c6:	ff 92       	push	r15
+ 2c8:	0f 93       	push	r16
+ 2ca:	1f 93       	push	r17
+ 2cc:	cf 93       	push	r28
+ 2ce:	df 93       	push	r29
+ 2d0:	00 d0       	rcall	.+0      	; 0x2d2 <Keypad_4_3_Init+0x14>
+ 2d2:	00 d0       	rcall	.+0      	; 0x2d4 <Keypad_4_3_Init+0x16>
+ 2d4:	cd b7       	in	r28, 0x3d	; 61
+ 2d6:	de b7       	in	r29, 0x3e	; 62
+ 2d8:	18 2f       	mov	r17, r24
+ 2da:	d4 2e       	mov	r13, r20
+ 2dc:	f2 2e       	mov	r15, r18
+	GPIOConfigType row;
+	row.PortDirection = 1;
+ 2de:	81 e0       	ldi	r24, 0x01	; 1
+ 2e0:	89 83       	std	Y+1, r24	; 0x01
+	row.UsePullUp = 0;
+ 2e2:	1a 82       	std	Y+2, r1	; 0x02
+	
+	GPIOConfigType col;
+	col.PortDirection = 0;
+ 2e4:	1b 82       	std	Y+3, r1	; 0x03
+	col.UsePullUp = 0;
+ 2e6:	1c 82       	std	Y+4, r1	; 0x04
+	
+	GPIO_Init(&row, port_x, row_1_pin);
+ 2e8:	46 2f       	mov	r20, r22
+ 2ea:	61 2f       	mov	r22, r17
+ 2ec:	ce 01       	movw	r24, r28
+ 2ee:	01 96       	adiw	r24, 0x01	; 1
+ 2f0:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+	GPIO_Init(&row, port_x, row_2_pin);
+ 2f4:	4d 2d       	mov	r20, r13
+ 2f6:	61 2f       	mov	r22, r17
+ 2f8:	ce 01       	movw	r24, r28
+ 2fa:	01 96       	adiw	r24, 0x01	; 1
+ 2fc:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+	GPIO_Init(&row, port_x, row_3_pin);
+ 300:	4f 2d       	mov	r20, r15
+ 302:	61 2f       	mov	r22, r17
+ 304:	ce 01       	movw	r24, r28
+ 306:	01 96       	adiw	r24, 0x01	; 1
+ 308:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+	GPIO_Init(&row, port_x, row_4_pin);
+ 30c:	40 2f       	mov	r20, r16
+ 30e:	61 2f       	mov	r22, r17
+ 310:	ce 01       	movw	r24, r28
+ 312:	01 96       	adiw	r24, 0x01	; 1
+ 314:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+	
+	GPIO_Init(&col, port_x, col_1_pin);
+ 318:	4e 2d       	mov	r20, r14
+ 31a:	61 2f       	mov	r22, r17
+ 31c:	ce 01       	movw	r24, r28
+ 31e:	03 96       	adiw	r24, 0x03	; 3
+ 320:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+	GPIO_Init(&col, port_x, col_2_pin);
+ 324:	4c 2d       	mov	r20, r12
+ 326:	61 2f       	mov	r22, r17
+ 328:	ce 01       	movw	r24, r28
+ 32a:	03 96       	adiw	r24, 0x03	; 3
+ 32c:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+	GPIO_Init(&col, port_x, col_3_pin);
+ 330:	4a 2d       	mov	r20, r10
+ 332:	61 2f       	mov	r22, r17
+ 334:	ce 01       	movw	r24, r28
+ 336:	03 96       	adiw	r24, 0x03	; 3
+ 338:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+}
+ 33c:	0f 90       	pop	r0
+ 33e:	0f 90       	pop	r0
+ 340:	0f 90       	pop	r0
+ 342:	0f 90       	pop	r0
+ 344:	df 91       	pop	r29
+ 346:	cf 91       	pop	r28
+ 348:	1f 91       	pop	r17
+ 34a:	0f 91       	pop	r16
+ 34c:	ff 90       	pop	r15
+ 34e:	ef 90       	pop	r14
+ 350:	df 90       	pop	r13
+ 352:	cf 90       	pop	r12
+ 354:	af 90       	pop	r10
+ 356:	08 95       	ret
+
+Disassembly of section .text.Keypad_4_3_read:
+
+000000b4 <Keypad_4_3_read>:
+
+
+
+unsigned char Keypad_4_3_read(unsigned char port_x, unsigned char row_1_pin, unsigned char row_2_pin, unsigned char row_3_pin, unsigned char row_4_pin,
+							  unsigned char col_1_pin, unsigned char col_2_pin, unsigned char col_3_pin)
+{
+  b4:	af 92       	push	r10
+  b6:	bf 92       	push	r11
+  b8:	cf 92       	push	r12
+  ba:	df 92       	push	r13
+  bc:	ef 92       	push	r14
+  be:	ff 92       	push	r15
+  c0:	0f 93       	push	r16
+  c2:	1f 93       	push	r17
+  c4:	cf 93       	push	r28
+  c6:	df 93       	push	r29
+  c8:	cd b7       	in	r28, 0x3d	; 61
+  ca:	de b7       	in	r29, 0x3e	; 62
+  cc:	63 97       	sbiw	r28, 0x13	; 19
+  ce:	0f b6       	in	r0, 0x3f	; 63
+  d0:	f8 94       	cli
+  d2:	de bf       	out	0x3e, r29	; 62
+  d4:	0f be       	out	0x3f, r0	; 63
+  d6:	cd bf       	out	0x3d, r28	; 61
+  d8:	f8 2e       	mov	r15, r24
+	unsigned char keypad_4_3[4][3] = {{'1', '2', '3'},
+  da:	8c e0       	ldi	r24, 0x0C	; 12
+  dc:	e0 e6       	ldi	r30, 0x60	; 96
+  de:	f0 e0       	ldi	r31, 0x00	; 0
+  e0:	de 01       	movw	r26, r28
+  e2:	11 96       	adiw	r26, 0x01	; 1
+  e4:	01 90       	ld	r0, Z+
+  e6:	0d 92       	st	X+, r0
+  e8:	8a 95       	dec	r24
+  ea:	e1 f7       	brne	.-8      	; 0xe4 <Keypad_4_3_read+0x30>
+									  {'7', '8', '9'},
+									  {'*', '0', '#'}};
+	
+	
+	
+	unsigned char rows_pins[4] = {row_1_pin, row_2_pin, row_3_pin, row_4_pin};
+  ec:	6d 87       	std	Y+13, r22	; 0x0d
+  ee:	4e 87       	std	Y+14, r20	; 0x0e
+  f0:	2f 87       	std	Y+15, r18	; 0x0f
+  f2:	08 8b       	std	Y+16, r16	; 0x10
+	unsigned char cols_pins[3] = {col_1_pin, col_2_pin, col_3_pin};
+  f4:	e9 8a       	std	Y+17, r14	; 0x11
+  f6:	ca 8a       	std	Y+18, r12	; 0x12
+  f8:	ab 8a       	std	Y+19, r10	; 0x13
+	unsigned char rows = 0;
+	unsigned char cols = 0;
+	
+	
+	
+	for(rows = 0; rows < 4; rows++)
+  fa:	00 e0       	ldi	r16, 0x00	; 0
+  fc:	6f c0       	rjmp	.+222    	; 0x1dc <Keypad_4_3_read+0x128>
+	{
+		data = GPIO_Readpin(port_x, cols_pins[key2]);
+  fe:	80 91 6c 00 	lds	r24, 0x006C	; 0x80006c <key2>
+ 102:	e1 e1       	ldi	r30, 0x11	; 17
+ 104:	f0 e0       	ldi	r31, 0x00	; 0
+ 106:	ec 0f       	add	r30, r28
+ 108:	fd 1f       	adc	r31, r29
+ 10a:	e8 0f       	add	r30, r24
+ 10c:	f1 1d       	adc	r31, r1
+ 10e:	60 81       	ld	r22, Z
+ 110:	8f 2d       	mov	r24, r15
+ 112:	0e 94 f7 01 	call	0x3ee	; 0x3ee <GPIO_Readpin>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 116:	e3 ec       	ldi	r30, 0xC3	; 195
+ 118:	f9 e0       	ldi	r31, 0x09	; 9
+ 11a:	31 97       	sbiw	r30, 0x01	; 1
+ 11c:	f1 f7       	brne	.-4      	; 0x11a <Keypad_4_3_read+0x66>
+ 11e:	00 c0       	rjmp	.+0      	; 0x120 <Keypad_4_3_read+0x6c>
+ 120:	00 00       	nop
+		_delay_ms(10);
+		if(data == 1)
+ 122:	81 30       	cpi	r24, 0x01	; 1
+ 124:	a1 f4       	brne	.+40     	; 0x14e <Keypad_4_3_read+0x9a>
+		{
+			return keypad_4_3[key1][key2];
+ 126:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <key1>
+ 12a:	90 e0       	ldi	r25, 0x00	; 0
+ 12c:	20 91 6c 00 	lds	r18, 0x006C	; 0x80006c <key2>
+ 130:	fc 01       	movw	r30, r24
+ 132:	ee 0f       	add	r30, r30
+ 134:	ff 1f       	adc	r31, r31
+ 136:	e8 0f       	add	r30, r24
+ 138:	f9 1f       	adc	r31, r25
+ 13a:	81 e0       	ldi	r24, 0x01	; 1
+ 13c:	90 e0       	ldi	r25, 0x00	; 0
+ 13e:	8c 0f       	add	r24, r28
+ 140:	9d 1f       	adc	r25, r29
+ 142:	e8 0f       	add	r30, r24
+ 144:	f9 1f       	adc	r31, r25
+ 146:	e2 0f       	add	r30, r18
+ 148:	f1 1d       	adc	r31, r1
+ 14a:	80 81       	ld	r24, Z
+ 14c:	4a c0       	rjmp	.+148    	; 0x1e2 <Keypad_4_3_read+0x12e>
+		}
+		
+		GPIO_Writepin(port_x, rows_pins[rows], 1);
+ 14e:	a0 2e       	mov	r10, r16
+ 150:	b1 2c       	mov	r11, r1
+ 152:	ed e0       	ldi	r30, 0x0D	; 13
+ 154:	f0 e0       	ldi	r31, 0x00	; 0
+ 156:	ec 0f       	add	r30, r28
+ 158:	fd 1f       	adc	r31, r29
+ 15a:	ea 0d       	add	r30, r10
+ 15c:	fb 1d       	adc	r31, r11
+ 15e:	e0 80       	ld	r14, Z
+ 160:	41 e0       	ldi	r20, 0x01	; 1
+ 162:	6e 2d       	mov	r22, r14
+ 164:	8f 2d       	mov	r24, r15
+ 166:	0e 94 ac 01 	call	0x358	; 0x358 <GPIO_Writepin>
+		
+		
+		for(cols = 0; cols < 3; cols++)
+ 16a:	10 e0       	ldi	r17, 0x00	; 0
+ 16c:	29 c0       	rjmp	.+82     	; 0x1c0 <Keypad_4_3_read+0x10c>
+		{
+			data = GPIO_Readpin(port_x, cols_pins[cols]);
+ 16e:	c1 2e       	mov	r12, r17
+ 170:	d1 2c       	mov	r13, r1
+ 172:	e1 e1       	ldi	r30, 0x11	; 17
+ 174:	f0 e0       	ldi	r31, 0x00	; 0
+ 176:	ec 0f       	add	r30, r28
+ 178:	fd 1f       	adc	r31, r29
+ 17a:	ec 0d       	add	r30, r12
+ 17c:	fd 1d       	adc	r31, r13
+ 17e:	60 81       	ld	r22, Z
+ 180:	8f 2d       	mov	r24, r15
+ 182:	0e 94 f7 01 	call	0x3ee	; 0x3ee <GPIO_Readpin>
+ 186:	e3 ec       	ldi	r30, 0xC3	; 195
+ 188:	f9 e0       	ldi	r31, 0x09	; 9
+ 18a:	31 97       	sbiw	r30, 0x01	; 1
+ 18c:	f1 f7       	brne	.-4      	; 0x18a <Keypad_4_3_read+0xd6>
+ 18e:	00 c0       	rjmp	.+0      	; 0x190 <Keypad_4_3_read+0xdc>
+ 190:	00 00       	nop
+			_delay_ms(10);
+			if(data == 1)
+ 192:	81 30       	cpi	r24, 0x01	; 1
+ 194:	a1 f4       	brne	.+40     	; 0x1be <Keypad_4_3_read+0x10a>
+			{
+				key2 = cols;
+ 196:	10 93 6c 00 	sts	0x006C, r17	; 0x80006c <key2>
+				key1 = rows;
+ 19a:	00 93 6d 00 	sts	0x006D, r16	; 0x80006d <key1>
+				return keypad_4_3[rows][cols];
+ 19e:	c5 01       	movw	r24, r10
+ 1a0:	88 0f       	add	r24, r24
+ 1a2:	99 1f       	adc	r25, r25
+ 1a4:	a8 0e       	add	r10, r24
+ 1a6:	b9 1e       	adc	r11, r25
+ 1a8:	81 e0       	ldi	r24, 0x01	; 1
+ 1aa:	90 e0       	ldi	r25, 0x00	; 0
+ 1ac:	8c 0f       	add	r24, r28
+ 1ae:	9d 1f       	adc	r25, r29
+ 1b0:	a8 0e       	add	r10, r24
+ 1b2:	b9 1e       	adc	r11, r25
+ 1b4:	f5 01       	movw	r30, r10
+ 1b6:	ec 0d       	add	r30, r12
+ 1b8:	fd 1d       	adc	r31, r13
+ 1ba:	80 81       	ld	r24, Z
+ 1bc:	12 c0       	rjmp	.+36     	; 0x1e2 <Keypad_4_3_read+0x12e>
+		}
+		
+		GPIO_Writepin(port_x, rows_pins[rows], 1);
+		
+		
+		for(cols = 0; cols < 3; cols++)
+ 1be:	1f 5f       	subi	r17, 0xFF	; 255
+ 1c0:	13 30       	cpi	r17, 0x03	; 3
+ 1c2:	a8 f2       	brcs	.-86     	; 0x16e <Keypad_4_3_read+0xba>
+				key2 = cols;
+				key1 = rows;
+				return keypad_4_3[rows][cols];
+			}
+		}
+		GPIO_Writepin(port_x, rows_pins[rows], 0);
+ 1c4:	40 e0       	ldi	r20, 0x00	; 0
+ 1c6:	6e 2d       	mov	r22, r14
+ 1c8:	8f 2d       	mov	r24, r15
+ 1ca:	0e 94 ac 01 	call	0x358	; 0x358 <GPIO_Writepin>
+ 1ce:	e3 ec       	ldi	r30, 0xC3	; 195
+ 1d0:	f9 e0       	ldi	r31, 0x09	; 9
+ 1d2:	31 97       	sbiw	r30, 0x01	; 1
+ 1d4:	f1 f7       	brne	.-4      	; 0x1d2 <Keypad_4_3_read+0x11e>
+ 1d6:	00 c0       	rjmp	.+0      	; 0x1d8 <Keypad_4_3_read+0x124>
+ 1d8:	00 00       	nop
+	unsigned char rows = 0;
+	unsigned char cols = 0;
+	
+	
+	
+	for(rows = 0; rows < 4; rows++)
+ 1da:	0f 5f       	subi	r16, 0xFF	; 255
+ 1dc:	04 30       	cpi	r16, 0x04	; 4
+ 1de:	08 f4       	brcc	.+2      	; 0x1e2 <Keypad_4_3_read+0x12e>
+ 1e0:	8e cf       	rjmp	.-228    	; 0xfe <Keypad_4_3_read+0x4a>
+			}
+		}
+		GPIO_Writepin(port_x, rows_pins[rows], 0);
+		_delay_ms(10);
+	}
+ 1e2:	63 96       	adiw	r28, 0x13	; 19
+ 1e4:	0f b6       	in	r0, 0x3f	; 63
+ 1e6:	f8 94       	cli
+ 1e8:	de bf       	out	0x3e, r29	; 62
+ 1ea:	0f be       	out	0x3f, r0	; 63
+ 1ec:	cd bf       	out	0x3d, r28	; 61
+ 1ee:	df 91       	pop	r29
+ 1f0:	cf 91       	pop	r28
+ 1f2:	1f 91       	pop	r17
+ 1f4:	0f 91       	pop	r16
+ 1f6:	ff 90       	pop	r15
+ 1f8:	ef 90       	pop	r14
+ 1fa:	df 90       	pop	r13
+ 1fc:	cf 90       	pop	r12
+ 1fe:	bf 90       	pop	r11
+ 200:	af 90       	pop	r10
+ 202:	08 95       	ret
+
+Disassembly of section .text.main:
+
+0000046e <main>:
+#include "GPIO.h"
+#include "keypad.h"
+#include <util/delay.h>
+
+int main(void)
+{
+ 46e:	cf 93       	push	r28
+ 470:	df 93       	push	r29
+ 472:	00 d0       	rcall	.+0      	; 0x474 <main+0x6>
+ 474:	cd b7       	in	r28, 0x3d	; 61
+ 476:	de b7       	in	r29, 0x3e	; 62
+	unsigned char data;
+	Keypad_4_3_Init('B', 0, 1, 2, 3, 4, 5, 6);
+ 478:	0f 2e       	mov	r0, r31
+ 47a:	f6 e0       	ldi	r31, 0x06	; 6
+ 47c:	af 2e       	mov	r10, r31
+ 47e:	f0 2d       	mov	r31, r0
+ 480:	0f 2e       	mov	r0, r31
+ 482:	f5 e0       	ldi	r31, 0x05	; 5
+ 484:	cf 2e       	mov	r12, r31
+ 486:	f0 2d       	mov	r31, r0
+ 488:	68 94       	set
+ 48a:	ee 24       	eor	r14, r14
+ 48c:	e2 f8       	bld	r14, 2
+ 48e:	03 e0       	ldi	r16, 0x03	; 3
+ 490:	22 e0       	ldi	r18, 0x02	; 2
+ 492:	41 e0       	ldi	r20, 0x01	; 1
+ 494:	60 e0       	ldi	r22, 0x00	; 0
+ 496:	82 e4       	ldi	r24, 0x42	; 66
+ 498:	0e 94 5f 01 	call	0x2be	; 0x2be <Keypad_4_3_Init>
+	
+	GPIOConfigType led;
+	led.PortDirection = 1;
+ 49c:	81 e0       	ldi	r24, 0x01	; 1
+ 49e:	89 83       	std	Y+1, r24	; 0x01
+	led.UsePullUp = 0;
+ 4a0:	1a 82       	std	Y+2, r1	; 0x02
+	GPIO_Init(&led, 'D', 7);
+ 4a2:	47 e0       	ldi	r20, 0x07	; 7
+ 4a4:	64 e4       	ldi	r22, 0x44	; 68
+ 4a6:	ce 01       	movw	r24, r28
+ 4a8:	01 96       	adiw	r24, 0x01	; 1
+ 4aa:	0e 94 02 01 	call	0x204	; 0x204 <GPIO_Init>
+    while(1)
+    {
+        //TODO:: Please write your application code 
+		data = Keypad_4_3_read('B', 0, 1, 2, 3, 4, 5, 6);
+ 4ae:	0f 2e       	mov	r0, r31
+ 4b0:	f6 e0       	ldi	r31, 0x06	; 6
+ 4b2:	af 2e       	mov	r10, r31
+ 4b4:	f0 2d       	mov	r31, r0
+ 4b6:	0f 2e       	mov	r0, r31
+ 4b8:	f5 e0       	ldi	r31, 0x05	; 5
+ 4ba:	cf 2e       	mov	r12, r31
+ 4bc:	f0 2d       	mov	r31, r0
+ 4be:	68 94       	set
+ 4c0:	ee 24       	eor	r14, r14
+ 4c2:	e2 f8       	bld	r14, 2
+ 4c4:	03 e0       	ldi	r16, 0x03	; 3
+ 4c6:	22 e0       	ldi	r18, 0x02	; 2
+ 4c8:	41 e0       	ldi	r20, 0x01	; 1
+ 4ca:	60 e0       	ldi	r22, 0x00	; 0
+ 4cc:	82 e4       	ldi	r24, 0x42	; 66
+ 4ce:	0e 94 5a 00 	call	0xb4	; 0xb4 <__data_load_end>
+		
+		if (data == '2')
+ 4d2:	82 33       	cpi	r24, 0x32	; 50
+ 4d4:	31 f4       	brne	.+12     	; 0x4e2 <main+0x74>
+		{
+			GPIO_Writepin('D', 7, 1);
+ 4d6:	41 e0       	ldi	r20, 0x01	; 1
+ 4d8:	67 e0       	ldi	r22, 0x07	; 7
+ 4da:	84 e4       	ldi	r24, 0x44	; 68
+ 4dc:	0e 94 ac 01 	call	0x358	; 0x358 <GPIO_Writepin>
+ 4e0:	e6 cf       	rjmp	.-52     	; 0x4ae <main+0x40>
+		}
+		else
+		{
+			GPIO_Writepin('D', 7, 0);
+ 4e2:	40 e0       	ldi	r20, 0x00	; 0
+ 4e4:	67 e0       	ldi	r22, 0x07	; 7
+ 4e6:	84 e4       	ldi	r24, 0x44	; 68
+ 4e8:	0e 94 ac 01 	call	0x358	; 0x358 <GPIO_Writepin>
+ 4ec:	e0 cf       	rjmp	.-64     	; 0x4ae <main+0x40>
